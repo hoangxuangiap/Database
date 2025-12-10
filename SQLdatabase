@@ -1,0 +1,183 @@
+CREATE DATABASE SaleManagement
+
+USE SaleManagement
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Position VARCHAR(50),
+    Level INT,
+	Username VARCHAR(50),
+	Password VARCHAR(50)
+);
+
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Email VARCHAR(100),
+    Phone VARCHAR(15)
+);
+
+--CREATE TABLE Categories (
+--    CategoryID INT PRIMARY KEY,
+--    CategoryName VARCHAR(100),
+--    Description TEXT
+--);
+
+--CREATE TABLE Suppliers (
+--    SupplierID INT PRIMARY KEY,
+--    Name VARCHAR(100),
+--    Contact VARCHAR(100),
+--    Address TEXT
+--);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Category VARCHAR(100),
+    Supplier VARCHAR(100),
+    Price DECIMAL(10,2)
+    --FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
+    --FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+
+CREATE TABLE PaymentMethods (
+    PaymentMethodID INT PRIMARY KEY,
+    MethodName VARCHAR(50),
+    Description TEXT
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    EmployeeID INT,
+    PaymentMethodID INT,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (PaymentMethodID) REFERENCES PaymentMethods(PaymentMethodID)
+);
+
+CREATE TABLE OrderDetails (
+    OrderDetailID INT PRIMARY KEY,
+	OrderID INT,
+	ProductID INT,
+	Quantity INT,
+	TotalAmount Decimal(10,2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+
+-- Thêm dữ liệu vào bảng Employees
+INSERT INTO Employees (EmployeeID, Name, Position, Level, Username, Password) VALUES
+(1, 'John Doe', 'Admin', 1, 'admin', 'admin'),
+(2, 'Jane Smith', 'Sales', 2, 'sales', 'sales'),
+(3, 'Michael Brown', 'Warehouse', 3, 'warehouse', 'warehouse');
+
+-- Thêm dữ liệu vào bảng Customers
+INSERT INTO Customers (CustomerID, Name, Email, Phone) VALUES
+(1, 'Alice Johnson', 'alice@gmail.com', '1234567890'),
+(2, 'Bob Williams', 'bob@gmail.com', '0987654321'),
+(3, 'Charlie Brown', 'charlie@gmail.com', '1112223333'),
+(4, 'Diana Miller', 'diana@gmail.com', '4445556666'),
+(5, 'Ethan Wilson', 'ethan@gmail.com', '7778889999'),
+(6, 'Fiona Clark', 'fiona@gmail.com', '1231231234'),
+(7, 'George Hall', 'george@gmail.com', '9879879876'),
+(8, 'Hannah Lewis', 'hannah@gmail.com', '5554443332'),
+(9, 'Ian Walker', 'ian@gmail.com', '6667778889'),
+(10, 'Julia Scott', 'julia@gmail.com', '8889997776');
+
+-- Thêm dữ liệu vào bảng Categories
+--INSERT INTO Categories (CategoryID, CategoryName, Description) VALUES
+--(1, 'Electronics', 'Electronic gadgets and devices'),
+--(2, 'Clothing', 'Men and Women clothing'),
+--(3, 'Furniture', 'Home and office furniture'),
+--(4, 'Books', 'Educational and non-fiction books'),
+--(5, 'Toys', 'Kids toys and games'),
+--(6, 'Sports', 'Sporting goods and equipment'),
+--(7, 'Beauty', 'Cosmetics and skincare products'),
+--(8, 'Automotive', 'Car accessories and tools'),
+--(9, 'Food', 'Groceries and food items'),
+--(10, 'Jewelry', 'Luxury watches and accessories');
+
+-- Thêm dữ liệu vào bảng Suppliers
+--INSERT INTO Suppliers (SupplierID, Name, Contact, Address) VALUES
+--(1, 'ABC Electronics', 'abc@electronics.com', 'New York, USA'),
+--(2, 'XYZ Clothing', 'xyz@clothing.com', 'Los Angeles, USA'),
+--(3, 'HomeStyle Furniture', 'home@furniture.com', 'Chicago, USA'),
+--(4, 'BookWorld', 'books@store.com', 'San Francisco, USA'),
+--(5, 'FunToys', 'toys@fun.com', 'Miami, USA'),
+--(6, 'SportsGear', 'sports@gear.com', 'Houston, USA'),
+--(7, 'BeautyCare', 'beauty@care.com', 'Dallas, USA'),
+--(8, 'AutoMart', 'auto@mart.com', 'Atlanta, USA'),
+--(9, 'FoodKing', 'food@king.com', 'Seattle, USA'),
+--(10, 'GoldTime', 'gold@time.com', 'Boston, USA');
+
+-- Thêm dữ liệu vào bảng Products
+--INSERT INTO Products (ProductID, ProductName, Category, Supplier, Price) VALUES
+--(1, 'Smartphone', 1, 1, 699.99),
+--(2, 'T-Shirt', 2, 2, 19.99),
+--(3, 'Office Chair', 3, 3, 129.99),
+--(4, 'Science Book', 4, 4, 49.99),
+--(5, 'Lego Set', 5, 5, 59.99),
+--(6, 'Basketball', 6, 6, 24.99),
+--(7, 'Lipstick', 7, 7, 14.99),
+--(8, 'Car Tire', 8, 8, 89.99),
+--(9, 'Organic Honey', 9, 9, 9.99),
+--(10, 'Gold Necklace', 10, 10, 499.99);
+
+INSERT INTO Products (ProductID, ProductName, Category, Supplier, Price) VALUES
+(1, 'Smartphone', 'Electronics', 'ABC Electronics', 699.99),
+(2, 'T-Shirt', 'Clothing', 'XYZ Clothing', 19.99),
+(3, 'Office Chair', 'Furniture', 'HomeStyle Furniture', 129.99),
+(4, 'Science Book', 'Books', 'BookWorld', 49.99),
+(5, 'Lego Set', 'Toys', 'FunToys', 59.99),
+(6, 'Basketball', 'Sports', 'SportsGear', 24.99),
+(7, 'Lipstick', 'Beauty', 'BeautyCare', 14.99),
+(8, 'Car Tire', 'Automotive', 'AutoMart', 89.99),
+(9, 'Organic Honey', 'Food', 'FoodKing', 9.99),
+(10, 'Gold Necklace', 'Jewelry', 'GoldTime', 499.99);
+
+
+
+-- Thêm dữ liệu vào bảng PaymentMethods
+INSERT INTO PaymentMethods (PaymentMethodID, MethodName, Description) VALUES
+(1, 'Credit Card', 'Visa, MasterCard, Amex'),
+(2, 'PayPal', 'Online Payment via PayPal'),
+(3, 'Bank Transfer', 'Direct Bank Transfer'),
+(4, 'Cash on Delivery', 'Pay at the time of delivery'),
+(5, 'Cryptocurrency', 'Bitcoin, Ethereum'),
+(6, 'Apple Pay', 'Payment via Apple Pay'),
+(7, 'Google Pay', 'Payment via Google Pay'),
+(8, 'Gift Card', 'Use Store Gift Card'),
+(9, 'Mobile Wallet', 'Payment through mobile wallet'),
+(10, 'Net Banking', 'Internet Banking from major banks');
+
+-- Thêm dữ liệu vào bảng Orders
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, EmployeeID, PaymentMethodID) VALUES
+(11, 2, '2024-03-11', 1, 3),
+(12, 4, '2024-03-12', 2, 1),
+(13, 6, '2024-03-13', 3, 4),
+(14, 8, '2024-03-14', 1, 2),
+(15, 10, '2024-03-15', 2, 5),
+(16, 1, '2024-03-16', 3, 6),
+(17, 3, '2024-03-17', 1, 7),
+(18, 5, '2024-03-18', 2, 8),
+(19, 7, '2024-03-19', 3, 9),
+(20, 9, '2024-03-20', 1, 10);
+-- Thêm dữ liệu vào bảng OrderDetails
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, TotalAmount) VALUES
+(11, 11, 3, 2, 259.98),
+(12, 12, 5, 4, 239.96),
+(13, 13, 7, 1, 14.99),
+(14, 14, 9, 3, 29.97),
+(15, 15, 2, 2, 39.98),
+(16, 16, 6, 5, 124.95),
+(17, 17, 8, 1, 89.99),
+(18, 18, 10, 1, 499.99),
+(19, 19, 4, 2, 99.98),
+(20, 20, 1, 1, 699.99);
+
+
+SELECT * FROM Orders
